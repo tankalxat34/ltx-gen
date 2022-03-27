@@ -1,0 +1,909 @@
+--[[-----------------------------------------------------------------------------------------------
+ File              : ui_cheat_naxac.script
+ Description       : Спавн-меню
+ Created           : 07.09.2013
+ Last edit         : 15.05.2014
+ Copyright         : naxac
+--]]-----------------------------------------------------------------------------------------------
+local cheat_list = {
+-- weapons and ammo
+	{"*** Оружие ***",
+	"wpn_knife",
+	"wpn_pm",
+	"wpn_pb",
+	"wpn_fort",
+	"wpn_fort_m1",
+	"wpn_hpsa",
+	"wpn_beretta",
+	"wpn_walther",
+	"wpn_walther_m1",
+	"wpn_sig220",
+	"wpn_colt1911",
+	"wpn_colt_m1",
+	"wpn_usp",
+	"wpn_desert_eagle",
+	"wpn_eagle_m1",
+	"wpn_bm16",
+	"wpn_toz34",
+	"hunters_toz",
+	"wpn_wincheaster1300",
+	"wpn_winchester_m1",
+	"wpn_spas12",
+	"wpn_spas12_m1",
+	"wpn_ak74u",
+	"wpn_ak74u_m1",
+	"wpn_mp5",
+	"wpn_mp5_m1",
+	"wpn_mp5_m2",
+	"wpn_ak74",
+	"wpn_ak74_m1",
+	"wpn_abakan",
+	"wpn_abakan_m1",
+	"wpn_abakan_m2",
+	"wpn_l85",
+	"wpn_l85_m1",
+	"wpn_l85_m2",
+	"wpn_lr300",
+	"wpn_lr300_m1",
+	"wpn_sig550",
+	"wpn_sig_m1",
+	"wpn_sig_m2",
+	"wpn_groza",
+	"wpn_groza_m1",
+	"wpn_val",
+	"wpn_val_m1",
+	"wpn_vintorez",
+	"wpn_svu",
+	"wpn_svd",
+	"wpn_svd_m1",
+	"wpn_rg-6",
+	"wpn_rg6_m1",
+	"wpn_rpg7",
+	"wpn_g36",
+	"wpn_fn2000",
+	"wpn_gauss",
+	"*** Боеприпасы  ***",
+	"ammo_9x18_fmj",
+	"ammo_9x18_pmm",
+	"ammo_9x19_pbp",
+	"ammo_9x19_fmj",
+	"ammo_11.43x23_hydro",
+	"ammo_11.43x23_fmj",
+	"ammo_12x70_buck",
+	"ammo_12x76_dart",
+	"ammo_12x76_zhekan",
+	"ammo_5.45x39_ap",
+	"ammo_5.45x39_fmj",
+	"ammo_9x39_sp5",
+	"ammo_9x39_ap",
+	"ammo_9x39_pab9",
+	"ammo_5.56x45_ss190",
+	"ammo_5.56x45_ap",
+	"ammo_7.62x54_7h14",
+	"ammo_7.62x54_7h1",
+	"ammo_7.62x54_ap",
+	"ammo_og-7b",
+	"ammo_vog-25p",
+	"ammo_vog-25",
+	"grenade_f1",
+	"grenade_rgd5",
+	"grenade_gd-05",
+	"ammo_m209",
+	"ammo_gauss",
+	"*** Навесы  ***",
+	"wpn_addon_scope",
+	"wpn_addon_scope_susat",
+	"wpn_addon_silencer",
+	"wpn_addon_grenade_launcher",
+	"wpn_addon_grenade_launcher_m203"},
+--outfits
+	{"*** Броня ***",
+	"novice_outfit",
+	"outfit_novice_m1",
+	"stalker_outfit",
+	"outfit_stalker_m1",
+	"outfit_stalker_m2",
+	"scientific_outfit",
+	"exo_outfit",
+	"outfit_exo_m1",
+	"bandit_outfit",
+	"outfit_bandit_m1",
+	"killer_outfit",
+	"outfit_killer_m1",
+	"monolit_outfit",
+	"specops_outfit",
+	"outfit_specnaz_m1",
+	"military_outfit",
+	"svoboda_light_outfit",
+	"outfit_svoboda_m1",
+	"svoboda_heavy_outfit",
+	"dolg_outfit",
+	"outfit_dolg_m1",
+	"dolg_scientific_outfit",
+	"ecolog_outfit",
+	"protection_outfit"},
+--items
+	{"*** Артефакты ***",
+	"af_medusa",
+	"af_cristall_flower",
+	"af_night_star",
+	"af_vyvert",
+	"af_gravi",
+	"af_gold_fish",
+	"af_blood",
+	"af_mincer_meat",
+	"af_soul",
+	"af_electra_sparkler",
+	"af_electra_flash",
+	"af_electra_moonlight",
+	"af_rusty_thorn",
+	"af_rusty_kristall",
+	"af_rusty_sea-urchin",
+	"af_ameba_slime",
+	"af_ameba_slug",
+	"af_ameba_mica",
+	"af_drops",
+	"af_fireball",
+	"af_cristall",
+	"af_dummy_glassbeads",
+	"af_dummy_pellicle",
+	"af_dummy_battery",
+	"af_dummy_dummy",
+	"af_dummy_spring",
+	"af_fuzz_kolobok",
+	"*** Части монстров ***",
+	"mutant_flesh_eye",
+	"mutant_boar_leg",
+	"mutant_dog_tail",
+	"mutant_psevdodog_tail",
+	"mutant_krovosos_jaw",
+	"mutant_burer_hand",
+	"mutant_zombie_hand",
+	"*** Девайсы ***",
+	"wpn_binoc",
+	"device_torch",
+	"detector_simple",
+	"detector_advances",
+	"detector_elite",
+	"device_pda",
+	"hand_radio",
+	"guitar_a",
+	"harmonica_a",
+	"*** Еда и медикаменты ***",
+	"bread",
+	"kolbasa",
+	"conserva",
+	"vodka",
+	"energy_drink",
+	"bandage",
+	"medkit",
+	"medkit_scientic",
+	"medkit_army",
+	"antirad",
+	"*** Квестовые  ***",
+	"gunslinger_flash",
+	"esc_wounded_flash",
+	"quest_case_02",
+	"dar_document1",
+	"dar_document2",
+	"dar_document3",
+	"dar_document4",
+	"dar_document5",
+	"kruglov_flash",
+	"lab_x16_documents",
+	"good_psy_helmet",
+	"bad_psy_helmet",
+	"decoder"},
+--monsters
+	{"*** Кровососы ***",
+	"bloodsucker_weak",
+	"bloodsucker_normal",
+	"bloodsucker_strong",
+	"*** Кабаны ***",
+	"boar_weak",
+	"boar_normal",
+	"boar_strong",
+	"*** Бюреры ***",
+	"burer_weak",
+	"burer_normal",
+	"burer_strong",
+	"*** Кошки ***",
+	"cat_weak",
+	"*** Химеры ***",
+	"chimera_weak",
+	"chimera_normal",
+	"chimera_strong",
+	"electro_chimera",
+	"*** Контроллёры ***",
+	"m_controller_normal",
+	"m_controller_normal_fat",
+	"m_controller_old",
+	"m_controller_old_fat",
+	"controller_tubeman",
+	"*** Ворона ***",
+	"m_crow",
+	"*** Слепые псы ***",
+	"dog_weak",
+	"dog_normal",
+	"dog_strong",
+	"*** Плоти ***",
+	"flesh_weak",
+	"flesh_normal",
+	"flesh_strong",
+	"*** Изломы ***",
+	"fracture_weak",
+	"fracture_normal",
+	"fracture_strong",
+	"*** Псевдогиганты ***",
+	"gigant_normal",
+	"gigant_strong",
+	"*** Полтергейсты ***",
+	"m_poltergeist_normal_tele",
+	"m_poltergeist_tele_outdoor",
+	"m_poltergeist_normal_flame",
+	"m_poltergeist_strong_flame",
+	"*** Псевдособаки ***",
+	"pseudodog_weak",
+	"pseudodog_normal",
+	"pseudodog_strong",
+	"psy_dog",
+	"*** Снорки ***",
+	"snork_weak",
+	"snork_normal",
+	"snork_strong",
+	"aes_snork",
+	"snork_indoor",
+	"snork_outdoor",
+	"snork_jumper",
+	"*** Тушканы ***",
+	"tushkano_normal",
+	"*** Зомби ***",
+	"zombie_weak",
+	"zombie_normal",
+	"zombie_strong",
+	"zombie_immortal"},
+--stalkers
+	{"*** Нейтралы ***",
+	"esc_stalker_respawn_1",
+	"bar_stalker_respawn_4",
+	"bar_stalker_respawn_1",
+	"bar_stalker_respawn_2",
+	"*** Долг ***",
+	"bar_dolg_respawn_1",
+	"bar_dolg_respawn_2",
+	"bar_dolg_respawn_3",
+	"*** Свобода ***",
+	"mil_freedom_respawn_2",
+	"mil_freedom_respawn_1",
+	"pri_respawn_freedom",
+	"*** Бандиты ***",
+	"gar_bandit_respawn_1",
+	"gar_bandit_respawn_2",
+	"ds_bandit_respawn_3",
+	"cit_bandit_respawn_2",
+	"*** Наёмники ***",
+	"ros_killer_respawn_3",
+	"ros_killer_respawn_2",
+	"ros_killer_respawn_4",
+	"*** Монолит ***",
+	"pri_monolith_respawn_1",
+	"pri_monolith_respawn_2",
+	"mil_monolit_rush_respawn_1",
+	"*** Военные ***",
+	"esc_soldier_respawn_1",
+	"esc_soldier_respawn_specnaz",
+	"pri_respawn_military",
+	"*** Зомбированные ***",
+	"rad_zombied_respawn_1",
+	"rad_zombied_respawn_2",
+	"rad_zombied_respawn_3",
+	"*** Экологи ***",
+	"yan_ecolog_respawn_1"
+	}
+}
+local btnsActorParams = {}
+local menu = nil
+-------------------------------------------------------------------------------------------------------------------
+class "cheat_menu"  (CUIScriptWnd)
+
+function cheat_menu:__init(owner) super()
+	menu = self
+	if self.menu_index == nil then self.menu_index = 1 end
+	local eng = [[qwertyuiop[]asdfghjkl;'zxcvbnm,./QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?!@#$%^&*()-_+=\| 0123456789]]
+	local rus = [[йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,!"№;%:?*()-_+=\/ 0123456789]]
+	self.translit = {}
+	for i = 1, string.len(rus) do
+		self.translit[string.sub(eng, i, i)] = string.sub(rus, i, i)
+	end
+	self.need_lang = false
+	self.was_found = -1
+	self:InitControls()
+	self:InitCallBacks()
+	self:FillList()
+end
+
+function cheat_menu:__finalize()
+end
+
+function cheat_menu:FillList()
+	if self.list:GetSize() > 0 then self.list:RemoveAll() end
+	self.tbl = cheat_list[self.menu_index]
+	for i = 1,#(self.tbl) do
+		local item = self.tbl[i]
+		self:AddItemToList(item)
+	end
+end
+
+function cheat_menu:InitControls()
+	self:Init(0,0, 1024, 768)
+	self.xml = CScriptXmlInit()
+	self.xml:ParseFile("ui_naxac_cheat.xml")
+	self.xml:InitStatic("back_video", self)
+	self.xml:InitStatic("background", self)
+	self.xml:InitStatic("rug_video", self)
+	
+	self.dialog = self.xml:InitStatic("main_dialog:dialog", self)
+	self.xml:InitStatic("main_dialog:cap_cheat", self.dialog)
+	
+	self.xml:InitFrame("frame",	self.dialog)
+	
+	self.tab = self.xml:InitTab("main_dialog:tab", self.dialog)
+	self:Register(self.tab,	"tab")
+	
+	self.xml:InitFrame("main_dialog:list_frame",			self.dialog)
+	
+	self.list = self.xml:InitList("main_dialog:list_window", 	self.dialog)
+	self:Register(self.list, "list_window")
+	
+	local ctrl
+	ctrl = self.xml:Init3tButton("main_dialog:btn_spawn", self.dialog)
+	self:Register(ctrl, "btn_spawn")
+	ctrl = self.xml:Init3tButton("main_dialog:btn_cancel", self.dialog)
+	self:Register(ctrl, "btn_cancel")
+	
+	-- Описание
+	self.xml:InitFrame("frame_descr", self)
+	self.cap_descr = CUIStatic()
+	self.cap_descr:SetAutoDelete(true)
+	self.cap_descr:SetText("Описание:")
+	self.cap_descr:SetFont(GetFontGraffiti19Russian())
+	self.cap_descr:Init(25,58,70,25)
+    self:AttachChild(self.cap_descr)
+	self.descr = self.xml:InitStatic("descr_list", self)
+	-- Цена
+	self.cost = CUIStatic()
+	self.cost:SetAutoDelete(true)
+	self.cost:SetText("")
+	self.cost:SetTextColor(255,235,157,30)
+	self.cost:SetFont(GetFontGraffiti19Russian())
+	self.cost:Init(65,204,140,20)
+    self.dialog:AttachChild(self.cost)
+	-- Вес
+	self.weight = CUIStatic()
+	self.weight:SetAutoDelete(true)
+	self.weight:SetText("")
+	self.weight:SetTextColor(255,242,159,26)
+	self.weight:SetFont(GetFontGraffiti19Russian())
+	self.weight:Init(65,226,140,20)
+    self.dialog:AttachChild(self.weight)
+	
+	-- Поиск по имени / ввод количества предметов
+	self.edit_box = self.xml:InitEditBox("main_dialog:frame_search",	self.dialog)
+	
+	self.search = CUIStatic()
+	self.search:SetWindowName("search")
+	self.search:SetAutoDelete(true)
+	self.search:SetText("Поиск / Кол-во")
+	self.search:SetTextColor(255,200,255,200)
+	self.search:SetFont(GetFontLetterica18Russian())
+    self.search:Init(745,295,134,23)
+    self:AttachChild(self.search)
+	self:AddCallback("search", ui_events.WINDOW_LBUTTON_DB_CLICK, self.RemoveText, self)
+	
+	self.btn_find = CUIButton()
+	self.btn_find:Init("ui\\ui_hud",378,85,45,25)
+	self.btn_find:SetText("Найти")
+	self.btn_find:SetTextAlign(CGameFont.alCenter)
+	self.btn_find:SetTextY(1)
+	self.btn_find:SetTextColor(255,240,165,25)
+	self.btn_find:SetOriginalRect(65,704,37,25)
+	self.btn_find:SetStretchTexture(true)
+	self:Register(self.btn_find, "btn_find")
+	self.dialog:AttachChild(self.btn_find)
+	self:AddCallback("btn_find", ui_events.BUTTON_DOWN, self.SearchItem, self)
+	
+	self.text = ""
+	-- переключение раскладки клавиатуры (EN/RU)
+	self.lang = "RUS"
+	self.btn_lang = CUIButton()
+	self.btn_lang:Init("ui\\ui_hud",594,85,37,25)
+	self.btn_lang:SetText(self.lang)
+	self.btn_lang:SetTextAlign(CGameFont.alCenter)
+	self.btn_lang:SetTextY(1)
+	self.btn_lang:SetTextColor(255,240,165,25)
+	self.btn_lang:SetOriginalRect(65,704,37,25)
+	self:Register(self.btn_lang, "btn_lang")
+	self.dialog:AttachChild(self.btn_lang)
+	self:AddCallback("btn_lang", ui_events.BUTTON_DOWN, self.ClickBtnLang, self)
+	
+	self:LoadCaption()
+	self:ActorParametres()
+end
+
+function cheat_menu:InitCallBacks()
+	self:AddCallback("tab",				ui_events.TAB_CHANGED,				self.OnTabChange,			self)
+	self:AddCallback("btn_cancel",		ui_events.BUTTON_CLICKED,			self.OnBtnCancel,			self)
+	self:AddCallback("btn_spawn",		ui_events.BUTTON_CLICKED,			self.OnBtnSpawn,			self)
+	self:AddCallback("list_window",		ui_events.LIST_ITEM_CLICKED, 		self.OnListItemClicked,		self)
+	self:AddCallback("list_window",		ui_events.WINDOW_LBUTTON_DB_CLICK,	self.OnListItemDbClicked,	self)
+end
+
+function cheat_menu:ActorParametres(prop)
+	local actor = db.actor
+	if actor and actor:alive() then
+		if not self.params then
+			self.params = self.xml:InitFrame("actor_params_list",	self)
+			self.xml:InitStatic("actor_params_capt", self.params)
+			self.st_health = self.xml:InitStatic("actor_health", self.params)
+			self.st_radiat = self.xml:InitStatic("actor_radiation", self.params)
+			self.st_psy = self.xml:InitStatic("actor_psy_health", self.params)
+			self.st_power = self.xml:InitStatic("actor_power", self.params)
+			
+			self.st_health:SetText(string.format("Здоровье: %d",actor.health*100).."%")
+			self.st_radiat:SetText(string.format("Радиация: %d",actor.radiation*100).."%")
+			self.st_psy:SetText(string.format("Пси-здоровье: %d",actor.psy_health*100).."%")
+			self.st_power:SetText(string.format("Выносливость: %d",actor.power*100).."%")
+			
+			for n=1,8 do
+				local name="button_"..n
+				local btn = CUIButton()
+				btn:SetAutoDelete(false)
+				btn:SetWindowName(name)
+				self:Register(btn)
+				self.params:AttachChild(btn)
+				btnsActorParams[name] = btn
+				btn:InitTexture("ui\\ui_common")
+				local x,y,x1 = 49,1000,15
+				if n%2 == 0 then
+					x,y,x1 = 678,209,40
+				end
+				btn:SetOriginalRect(x,y,21,21)
+				local y1 = 29+30*math.floor((n-1)/2)
+				btn:Init(x1,y1,21,21)
+				btn:Show(true)
+				self:AddCallback(name, ui_events.BUTTON_DOWN, loadstring("ui_cheat_naxac.clickParamBtn("..n..")"), self)
+			end
+		end
+	end
+end
+
+function cheat_menu:OnBtnCancel()
+	self:GetHolder():start_stop_menu	(self.owner, true) --new(show main window)
+	self:GetHolder():start_stop_menu	(self,true)
+	self.owner:Show						(true)
+end
+
+function cheat_menu:OnTabChange()
+	local i = self.tab:GetActiveIndex()
+	self.menu_index = i+1
+	self:FillList()
+	self:LoadCaption()
+	
+	self.list:ResetFocusCapture()
+	local itm_index = self.list:GetFocusedItem()
+	if itm_index then self.list:ScrollToPos(itm_index) end
+	self:OnListItemClicked()
+end
+
+function cheat_menu:LoadCaption()
+	local names = {"вооружение","броню","предмет","монстра","сталкера"}
+	
+	if self.subCapt == nil then
+		self.subCapt = CUIStatic()
+		self.subCapt:SetAutoDelete(true)
+		self.subCapt:SetText("Выберите "..names[self.menu_index]..":")
+		self.subCapt:SetTextColor(255,249,230,182)
+		self.subCapt:SetFont(GetFontGraffiti19Russian())	 		
+		self.subCapt:Init(65,85,150,21)
+		self.dialog:AttachChild(self.subCapt)
+	else
+		self.subCapt:SetText("Выберите "..names[self.menu_index]..":")
+	end
+end
+
+function cheat_menu:OnListItemClicked()
+	if self.list:GetSize()==0 then return end
+	
+	local itm_index = self.list:GetSelectedItem()
+	if itm_index < 0 or #self.tbl<itm_index+1 then return end
+	self.list:SetFocusedItem(itm_index)
+	
+	self:GetDescription(itm_index)
+end
+
+function cheat_menu:OnListItemDbClicked()
+	self:OnBtnSpawn()
+end
+
+function cheat_menu:GetDescription(index)
+	local section = self.tbl[index+1]
+	if string.find(section,"***") then return end
+	local file, sizes = give_icon_params(section, self.menu_index)
+	
+	local pw = (sizes.width/5)*4
+	local ph = (sizes.height/5)*4
+	local px = 348-(pw/2)
+	local py = 176-(ph/2)
+	
+	if self.pict == nil then
+		self.pict = CUIStatic()
+		self.pict:SetWindowName("pict")
+		self.pict:SetAutoDelete(true)
+		self.dialog:AttachChild(self.pict)
+	end
+	self.pict:InitTexture(file)
+	self.pict:SetOriginalRect(sizes.x,sizes.y,sizes.width,sizes.height)
+	self.pict:Init(px,py,pw,ph)
+	self.pict:SetStretchTexture(true)
+	
+	if self.menu_index >= 4 then
+		self.descr:SetText("")
+		self.cost:SetText("")
+		self.weight:SetText("")
+		return
+	end
+	
+	local ini = system_ini()
+	local description = "%c[255,255,0,0]<no description>"
+	local cst,wght = 0,0
+	if ini:section_exist(section) then
+		if ini:line_exist(section, "description") then
+			description = game.translate_string(ini:r_string(section, "description"))
+		end
+		if ini:line_exist(section, "cost") then
+			cst = ini:r_float(section, "cost")
+		end
+		if ini:line_exist(section, "inv_weight") then
+			wght = ini:r_float(section, "inv_weight")
+		end
+	end
+	
+	if string.len(description)>=1050 then description = string.sub(description,1,1047).."..." end
+	
+	self.descr:SetText(description)
+	self.cost:SetText(string.format("Цена: %d руб.", cst))
+	self.weight:SetText(string.format("Вес: %.2f кг.", wght))
+end
+
+function cheat_menu:ClickBtnLang()
+	self.lang = (self.lang == "RUS" and "ENG") or "RUS"
+	self.btn_lang:SetText(self.lang)
+end
+
+function cheat_menu:RemoveText()
+	self.text = ""
+	self.search:SetText("_")
+	self.was_found = -1
+end
+
+function cheat_menu:SearchText(letter)
+	local lett = letter and (self.lang=="RUS" and self.translit[letter] or letter) or ""
+	if lett == "%" then return end
+	if string.len(self.text)>=18 then return end
+	if string.len(self.text)>1 then self.text = string.sub(self.text,1,-2)..lett.."_"
+	else self.text = lett.."_" end
+	
+	self.search:SetText(self.text)
+end
+
+function cheat_menu:BackSpace()
+	if self.text ~= "" and string.len(self.text)>2 then
+		self.text = string.sub(self.text,1,-3).."_"
+		self.search:SetText(self.text)
+	else
+		self.text = "_"
+	end
+	self.was_found = -1
+	self.search:SetText(self.text)
+end
+
+function cheat_menu:SearchItem()
+	if self.text == "" then return end
+	local size = self.list:GetSize()
+	local search_text = string_lower(string.sub(self.text,1,-2))
+	search_text = string.gsub(search_text,"-"," ")
+	for i=0,size-1 do
+		local item = self.list:GetItem(i)
+		local item_text = string_lower(item.fn:GetText())
+		item_text = string.gsub(item_text,"-"," ")
+		item_text = string.gsub(item_text,"ё","е")
+		if #item_text >= #search_text and string.find(item_text,search_text) then
+			if self.was_found < i then
+				self.was_found = i
+				self.list:ScrollToPos(i)
+				self.list:SetFocusedItem(i)
+				self:GetDescription(i)
+				break
+			end
+		end
+	end
+end
+
+function cheat_menu:OnBtnSpawn()
+	if not check_game() then return end
+	
+	if self.list:GetSize()==0 then return end
+	local itm_index		= self.list:GetFocusedItem()
+	if (not itm_index) or itm_index < 0 or itm_index > #self.tbl-1 then return end
+
+	local sect = self.tbl[itm_index+1]
+	if string.find(sect,"***") then return end
+	if not system_ini():section_exist(sect) then return end
+	
+	local count = tonumber(string.sub(self.text,1,-2))
+	
+	self.text = ""
+	self.search:SetText("_")
+	if self.menu_index < 4 then this.spawn_items(sect,count)
+	-- нпс спавним по одному
+	else this.spawn_npc(sect) end
+end
+
+function cheat_menu:OnKeyboard(dik, keyboard_action)
+	CUIScriptWnd.OnKeyboard(self,dik,keyboard_action)
+	if keyboard_action == ui_events.WINDOW_KEY_PRESSED then
+		if dik == DIK_keys.DIK_ESCAPE then self:OnBtnCancel()
+		elseif dik == DIK_keys.DIK_RETURN then self:OnBtnSpawn()
+		elseif dik == DIK_keys.DIK_TAB then self:OnKeyNewTab()
+		elseif dik == DIK_keys.DIK_BACK then self:BackSpace()
+		elseif dik == DIK_keys.DIK_DOWN then self:NavigateList("down")
+		elseif dik == DIK_keys.DIK_UP then self:NavigateList("up")
+		elseif dik == DIK_keys.DIK_LMENU then self.need_lang = true
+		elseif dik == DIK_keys.DIK_LSHIFT and self.need_lang then self.need_lang = false self:ClickBtnLang()
+		else
+			self.need_lang = false
+			local letter = string.sub(self.edit_box:GetText(),-1)
+			if letter and letter~="" then
+				self:SearchText(letter)
+				self.edit_box:SetText("")
+			end
+		end
+	end
+	return true
+end
+
+function cheat_menu:NavigateList(where)
+	if not where then return end
+	local size = self.list:GetSize()
+	local index = self.list:GetFocusedItem()
+	local new_index = 0
+	if where == "down" then
+		if not index or index<0 or index>=size-1 then new_index = 0
+		else new_index = index+1 end
+	elseif where == "up" then
+		if not index or index<=0 or index>size-1 then new_index = size-1
+		else new_index = index-1 end
+	end
+	self.list:SetFocusedItem(new_index)
+	self.list:ScrollToPos(new_index)
+	self:GetDescription(new_index)
+end
+
+function cheat_menu:OnKeyNewTab()
+	local i = self.tab:GetActiveIndex()
+	local index = i<4 and i+1 or 0
+	self.tab:SetNewActiveTab(index)
+	self:OnTabChange()
+end
+
+function cheat_menu:AddItemToList(sect)
+	local ini = system_ini()
+	local itm_name,fail,caption
+	if string.find(sect,"***") then
+		itm_name = sect
+		caption = true
+	elseif ini:section_exist(sect) then
+		if self.menu_index == 5 then
+			local comm = this.read_if_exist("s",ini,sect,"community",sect)
+			local rank = this.read_if_exist("s",ini,sect,"spec_rank","")
+			if rank == "regular" then rank = "experienced" end
+			if comm == "stalker" then comm = "neutral" end
+			itm_name = game.translate_string(comm.."_"..rank)
+		else
+			itm_name = game.translate_string(this.read_if_exist("s",ini,sect,"inv_name",sect))
+		end
+		--	Если вещь квестовая - напишем об этом
+		if (ini:line_exist(sect, "quest_item") and ini:r_bool(sect, "quest_item") == true)
+				or (ini:line_exist(sect, "can_trade") and ini:r_bool(sect, "can_trade") == false) then
+			itm_name = itm_name.." (квестовый)"
+		end
+	else
+		-- Если в таблицу написали какую-то хрень - сообщаем
+		itm_name = "Секция ["..sect.."] отсутствует в игре!"
+		fail = true
+	end
+	
+	-- Укоротим нах длинные названия, а то некрасиво
+	if string.len(itm_name)>50 then itm_name = string.sub(itm_name,1,48).."..." end
+	
+	local _itm = text_item()
+	_itm.fn:SetText(itm_name)
+	if fail then
+		_itm.fn:SetTextColor(255,200,30,30)
+	elseif caption then
+		_itm.fn:SetTextColor(255,60,200,60)
+	end
+	self.list:AddItem(_itm)
+end
+------------------------------------------------------------------------------------------
+local sect_by_icon = {		-- иконки для сталкеров
+	["esc_stalker_respawn_1"]="ui_npc_u_green_stalker_2",
+	["bar_stalker_respawn_4"]="ui_npc_u_stalker_neytral_hood_uzor",
+	["bar_stalker_respawn_1"]="ui_npc_u_stalker_neytral_nauchniy",
+	["bar_stalker_respawn_2"]="ui_npc_u_stalker_neytral_exoskeleton",
+	["bar_dolg_respawn_1"]="ui_npc_u_stalker_do_mask",
+	["bar_dolg_respawn_2"]="ui_npc_u_stalker_do_nauchniy",
+	["bar_dolg_respawn_3"]="ui_npc_u_stalker_do_exoskeleton",
+	["mil_freedom_respawn_2"]="ui_npc_u_stalker_sv_rukzak_1_1",
+	["mil_freedom_respawn_1"]="ui_npc_u_stalker_sv_hood_9",
+	["pri_respawn_freedom"]="ui_npc_u_stalker_sv_exoskeleton",
+	["gar_bandit_respawn_1"]="ui_npc_u_stalker_bandit_3",
+	["gar_bandit_respawn_2"]="ui_npc_u_stalker_bandit_4",
+	["ds_bandit_respawn_3"]="ui_npc_u_stalker_bandit_master",
+	["cit_bandit_respawn_2"]="ui_npc_u_stalker_bandit_master",
+	["ros_killer_respawn_3"]="ui_npc_u_stalker_ki_head_1",
+	["ros_killer_respawn_2"]="ui_npc_u_stalker_ki_mask",
+	["ros_killer_respawn_4"]="ui_npc_u_stalker_ki_exoskeleton",
+	["pri_monolith_respawn_1"]="ui_npc_u_stalker_mo_head_1",
+	["pri_monolith_respawn_2"]="ui_npc_u_stalker_mo_nauchniy",
+	["mil_monolit_rush_respawn_1"]="ui_npc_u_stalker_mo_exo",
+	["esc_soldier_respawn_1"]="ui_npc_u_soldier_bandana",
+	["esc_soldier_respawn_specnaz"]="ui_npc_u_soldier_spetsnaz",
+	["pri_respawn_military"]="ui_npc_u_stalker_militari_antigas_2",
+	["rad_zombied_respawn_1"]="ui_npc_u_stalker_zombie1",
+	["rad_zombied_respawn_2"]="ui_npc_u_stalker_zombie2",
+	["rad_zombied_respawn_3"]="ui_npc_u_zombie_exoskeleton",
+	["yan_ecolog_respawn_1"]="ui_npc_u_stalker_ecolog"
+	}
+function give_icon_params(sect,n)
+	local ini = system_ini()
+	local t = {}
+	local file
+	if ini and ini:section_exist(sect) then
+		local tex_name
+		if n>=4 and ini:line_exist(sect, "icon") then
+			tex_name = ini:r_string(sect, "icon")
+		elseif sect_by_icon[sect] then
+			tex_name = sect_by_icon[sect]
+		end
+		if tex_name then
+			local tex_info = GetTextureInfo(tex_name, tex_name)
+			local rect = tex_info:get_rect()
+			t.x = rect.x1
+			t.y = rect.y1
+			t.width = rect.x2 - rect.x1
+			t.height = rect.y2 - rect.y1
+			file = tex_info:get_file_name()
+		else
+			t.width = read_if_exist("f",nil,sect,"inv_grid_width",0)*50		--ini:r_float(sect, "inv_grid_width")*50
+			t.height = read_if_exist("f",nil,sect,"inv_grid_height",0)*50	--ini:r_float(sect, "inv_grid_height")*50
+			t.x = read_if_exist("f",nil,sect,"inv_grid_x",0)*50				--ini:r_float(sect, "inv_grid_x")*50
+			t.y = read_if_exist("f",nil,sect,"inv_grid_y",0)*50				--ini:r_float(sect, "inv_grid_y")*50
+			file = "ui\\ui_icon_equipment"
+		end
+	end
+	if not file then
+		t.width = 170
+		t.height = 58
+		t.x = 813
+		t.y = 943
+		file = "ui\\ui_npc_monster"
+	end
+	return file, t
+end
+
+function spawn_items(sect,num)
+	if not sect then return end
+	num = num~=nil and (num>10 and 10 or num) or 1	-- больше десяти предметов за раз не спавним
+	for i=1,num do
+		alife():create(sect,db.actor:position(),db.actor:level_vertex_id(),db.actor:game_vertex_id(),db.actor:id())
+	end
+	local snd = xr_sound.get_safe_sound_object([[device\decoder]])
+	snd:play(db.actor, 0, sound_object.s2d)
+end
+
+function spawn_npc(sect)
+	if not sect then return end
+	local pos = db.actor:position()
+	local dir = db.actor:direction()
+	pos = pos:add(dir:mul(3))
+	alife():create(sect,pos,db.actor:level_vertex_id(),db.actor:game_vertex_id())
+	local snd = xr_sound.get_safe_sound_object([[device\decoder]])
+	snd:play(db.actor, 0, sound_object.s2d)
+end
+
+function check_game()
+	return alife() and level.present() and db.actor and db.actor:alive()
+end
+
+function string_lower(str)
+	local low = [[qwertyuiopasdfghjklzxcvbnmйцукенгшщзхъфывапролджэячсмитьбюё]]
+	local high = [[QWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ]]
+	local low_str = ""
+	for i = 1, #str do
+		local letter = string.sub(str,i,i)
+		for a = 1,#high do
+			if letter == string.sub(high,a,a) then letter = string.sub(low,a,a) break end
+		end
+		low_str = low_str..letter
+	end
+	return low_str
+end
+
+function clickParamBtn(num)
+	local actor = db.actor
+	if not (actor and actor:alive()) then return end
+	
+	local step = num%2 == 0 and -0.05 or 0.05
+	local stat
+	local param = math.floor((num-1)/2)
+	if param == 0 and actor.health>0 then
+		actor.health = step
+		stat = menu.st_health
+	elseif param == 1 then
+		actor.radiation = step
+		stat = menu.st_radiat
+	elseif param == 2 and actor.psy_health>0 then
+		actor.psy_health = step
+		stat = menu.st_psy
+	elseif  param == 3 then
+		actor.power = step
+		stat = menu.st_power
+	end
+	if stat then
+		local st_text = stat:GetText()
+		local n = string.find(st_text," ")
+		local capt = string.sub(st_text,1,n)
+		local str_num = string.sub(st_text,n+1,-2)
+		
+		local new_num = tonumber(str_num)+(step*100)
+		new_num = (new_num>100 and 100) or (new_num<0 and 0) or new_num
+		stat:SetText(capt..tostring(new_num).."%")
+	end
+end
+
+-- получаем информацию из ини-файла
+function read_if_exist(what,ini,section,name,def)
+	if not ini then ini = system_ini() end
+	if ini and ini:section_exist(section) and ini:line_exist(section,name) then
+		if what == "f" then
+			return ini:r_float(section,name)
+		elseif what == "s" then
+			return ini:r_string(section,name)
+		elseif what == "b" then
+			return ini:r_bool(section,name)
+		end
+	end
+	return def
+end
+
+------------------------------------------------------------------------------------------
+class "text_item" (CUIListItemEx)
+
+function text_item:__init() super()
+	self:SetWndRect		(0,0,430,22)
+	
+	local ca = 255
+	local cr = 255
+	local cg = 230
+	local cb = 200
+	
+	self.fn					= CUIStatic	()
+	self.fn:SetAutoDelete	(true)
+	self:AttachChild		(self.fn)
+	self.fn:SetWndRect		(0,0,230,22)
+	self.fn:SetText			("item")
+	self.fn:SetFont			(GetFontLetterica18Russian())
+	self.fn:SetTextColor	(ca,cr,cg,cb)
+end
+
